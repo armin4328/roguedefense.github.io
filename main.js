@@ -21,12 +21,12 @@ class MyGame extends Phaser.Scene {
         keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
 
         gameState.background = this.add.image(950, 470, "bg");
-        
-        const platforms = this.physics.add.staticGroup();
 
+        // Ground
+        const platforms = this.physics.add.staticGroup();
         platforms.create(700,928, "ground").setScale(6).refreshBody();
 
-
+        // Physics
         gameState.character = this.physics.add.sprite(100,450,"mc")
         gameState.character.setBounce(0.2);
         gameState.character.setCollideWorldBounds(true)
@@ -34,6 +34,7 @@ class MyGame extends Phaser.Scene {
     } 
 
     update() {
+        // Player movement
         if(keyA.isDown) {
             gameState.character.setVelocityX(-160);
         }
@@ -43,9 +44,10 @@ class MyGame extends Phaser.Scene {
         if(keyW.isDown) {
             gameState.character.setVelocityY(-160);
         }
+
+        
     }
 }
-
 
 var config = {
     type: Phaser.AUTO,
