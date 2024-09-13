@@ -11,7 +11,9 @@ class MyGame extends Phaser.Scene {
         this.load.image("bg", "assets/bg.png");
         this.load.image('player', 'assets/character.png');
         this.load.image("ground", "assets/platform.png")
-        this.load.spritesheet('idle', 'assets/idle_animation.png', {frameWidth: 150, frameHeight: 250})
+        this.load.spritesheet('idle', 'assets/idle_animation.png', {frameWidth: 240, frameHeight: 240})
+        this.load.spritesheet('right', 'assets/walk_right_animation.png', {frameWidth: 240, frameHeight: 240})
+        this.load.spritesheet('left', 'assets/walk_left_animation.png', {frameWidth: 240, frameHeight: 240})
     }
 
     create() {
@@ -39,22 +41,37 @@ class MyGame extends Phaser.Scene {
             frameRate: 1,
             repeat: -1
         })
+        this.anims.create({
+            key: 'right',
+            frames: this.anims.generateFrameNumbers('right', {start: 0, end: 6}),
+            frameRate: 8,
+            repeat: -1
+        })
+        this.anims.create({
+            key: 'left',
+            frames: this.anims.generateFrameNumbers('left', {start: 0, end: 6}),
+            frameRate: 8,
+            repeat: -1
+        })
 
     } 
 
     update() {
-        gameState.player.anims.play('idle', true)
+    
         if(keyA.isDown) {
-            gameState.player.setVelocityX(-280);
+            gameState.player.setVelocityX(-380);
+            gameState.player.anims.play('left', true)
         }
         if(keyD.isDown) {
-            gameState.player.setVelocityX(280);
+            gameState.player.setVelocityX(380);
+            gameState.player.anims.play('right', true)
         }
-        if(keyW.isDown && this.player.body.touching.down) {
-            gameState.player.setVelocityY(-280);
+        if(keyW.isDown) {
+            gameState.player.setVelocityY(-380);
         }
         if (keyW.isUp && keyA.isUp && keyD.isUp) {
             gameState.player.setVelocityX(0);
+            gameState.player.anims.play('idle', true)
         }
     }
 }
